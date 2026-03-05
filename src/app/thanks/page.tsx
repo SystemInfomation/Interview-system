@@ -78,11 +78,10 @@ export default function ThanksPage() {
           🎉
         </motion.div>
         <h1 className="text-3xl font-bold text-cyan-400 mb-4">
-          Thank You!
+          Photos Uploaded!
         </h1>
         <p className="text-gray-400 max-w-md mx-auto mb-8">
-          Your interview signup has been submitted successfully. We&apos;ll be in
-          touch with more details about your TikTok video interview!
+          Your photos have been saved successfully. Thanks for sharing!
         </p>
         <Link href="/">
           <Button variant="outline">← Back to Home</Button>

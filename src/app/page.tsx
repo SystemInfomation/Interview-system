@@ -3,18 +3,10 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { InterviewForm } from "@/components/interview-form";
-import { FormData } from "@/lib/types";
+import { PhotoUpload } from "@/components/photo-upload";
 
 export default function Home() {
   const [animationDone, setAnimationDone] = React.useState(false);
-  const router = useRouter();
-
-  const handleFormComplete = (data: FormData) => {
-    sessionStorage.setItem("formData", JSON.stringify(data));
-    router.push("/review");
-  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-4 py-12">
@@ -43,16 +35,15 @@ export default function Home() {
         className="text-center mb-8"
       >
         <h1 className="text-3xl font-bold text-cyan-400 mb-2">
-          Alliance Academy Interview Signup
+          Alliance Academy Photo Upload
         </h1>
         <p className="text-gray-400 text-sm max-w-md mx-auto">
-          Sign up for a TikTok video interview. Fill out the form below to get
-          started!
+          Upload photos of yourself or with friends. Max file size: 100 MB.
         </p>
       </motion.div>
 
-      {/* Form — fades in after logo animation */}
-      {animationDone && <InterviewForm onComplete={handleFormComplete} />}
+      {/* Upload form — fades in after logo animation */}
+      {animationDone && <PhotoUpload />}
     </main>
   );
 }

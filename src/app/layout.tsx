@@ -15,9 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Alliance Academy Interview Signup",
-  description:
-    "Sign up for TikTok video interviews at Alliance Academy for Innovation",
+  title: "Alliance Academy Photo Upload",
+  description: "Upload photos of yourself or with friends at Alliance Academy for Innovation",
 };
 
 export default function RootLayout({
