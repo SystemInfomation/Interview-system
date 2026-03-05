@@ -1,19 +1,13 @@
 /**
  * Server-side input sanitization to prevent XSS.
- * Strips HTML tags and trims whitespace.
+ * Encodes HTML special characters and trims whitespace.
  */
 export function sanitizeInput(input: string): string {
   return input
-    .replace(/<[^>]*>/g, "")
-    .replace(/[<>"'&]/g, (match) => {
-      const map: Record<string, string> = {
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#x27;",
-        "&": "&amp;",
-      };
-      return map[match] || match;
-    })
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;")
     .trim();
 }
