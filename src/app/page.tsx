@@ -45,7 +45,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-cyan-400 mb-2">
           Alliance Academy Interview Signup
         </h1>
-        <p className="text-gray-400 text-sm max-w-md">
+        <p className="text-gray-400 text-sm max-w-md mx-auto">
           Sign up for a TikTok video interview. Fill out the form below to get
           started!
         </p>

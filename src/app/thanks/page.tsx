@@ -80,7 +80,7 @@ export default function ThanksPage() {
         <h1 className="text-3xl font-bold text-cyan-400 mb-4">
           Thank You!
         </h1>
-        <p className="text-gray-400 max-w-md mb-8">
+        <p className="text-gray-400 max-w-md mx-auto mb-8">
           Your interview signup has been submitted successfully. We&apos;ll be in
           touch with more details about your TikTok video interview!
         </p>
