@@ -26,7 +26,6 @@ const ACCEPTED_MIME_TYPES = [
 ];
 
 export function PhotoUpload() {
-  const [name, setName] = React.useState("");
   const [files, setFiles] = React.useState<File[]>([]);
   const [uploading, setUploading] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
@@ -65,15 +64,6 @@ export function PhotoUpload() {
   };
 
   const handleUpload = async () => {
-    if (!name.trim()) {
-      toast({
-        title: "Name required",
-        description: "Please enter your name before uploading.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     if (files.length === 0) {
       toast({
         title: "No photos selected",
@@ -92,13 +82,16 @@ export function PhotoUpload() {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const ext = file.name.split(".").pop() ?? "jpg";
-      const safeName = name.trim().replace(/[^a-zA-Z0-9]/g, "-");
       const uid = crypto.randomUUID().slice(0, 8);
-      const path = `${Date.now()}-${safeName}-${uid}-${i}.${ext}`;
+      const path = `uploads/${Date.now()}-${uid}-${i}.${ext}`;
 
       const { error: storageError } = await supabase.storage
         .from("photos")
-        .upload(path, file, { cacheControl: "3600", upsert: false });
+        .upload(path, file, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: file.type,
+        });
 
       if (storageError) {
         toast({
@@ -122,7 +115,6 @@ export function PhotoUpload() {
     // if the DB insert fails, so we notify the user but still navigate to thanks.
     const { error: dbError } = await supabase.from("photo_uploads").insert(
       uploadedUrls.map((image_url) => ({
-        name: name.trim(),
         image_url,
       }))
     );
@@ -155,20 +147,6 @@ export function PhotoUpload() {
         </CardHeader>
 
         <CardContent className="space-y-5">
-          {/* Name */}
-          <div className="space-y-2">
-            <Label htmlFor="upload-name">Your Name</Label>
-            <Input
-              id="upload-name"
-              placeholder="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              maxLength={50}
-              disabled={uploading}
-            />
-            <p className="text-xs text-gray-500">Up to 50 characters</p>
-          </div>
-
           {/* File picker */}
           <div className="space-y-2">
             <Label htmlFor="upload-photos">Select Photos</Label>
@@ -224,7 +202,7 @@ export function PhotoUpload() {
           <Button
             className="w-full"
             onClick={handleUpload}
-            disabled={uploading || files.length === 0 || !name.trim()}
+            disabled={uploading || files.length === 0}
           >
             {uploading ? `Uploading… ${progress}%` : "Upload Photos"}
           </Button>
